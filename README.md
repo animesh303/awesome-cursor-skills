@@ -143,6 +143,19 @@ Commands are quick workflows and repeatable tasks that can be triggered with a s
 
 ```
 awesome-cursor-skills/
+├── .cursor/
+│   ├── agents/               # Example subagents
+│   │   ├── debugger.md       # Debugging assistant
+│   │   ├── security-auditor.md  # Security review agent
+│   │   ├── test-runner.md    # Test execution agent
+│   │   └── verifier.md       # Work verification agent
+│   └── commands/             # Example commands
+│       ├── code-review-checklist.md
+│       ├── create-pr.md
+│       ├── onboard-new-developer.md
+│       ├── run-all-tests-and-fix.md
+│       ├── security-audit.md
+│       └── setup-new-feature.md
 ├── docs/
 │   └── templates/
 │       ├── rules.md          # Rules template
