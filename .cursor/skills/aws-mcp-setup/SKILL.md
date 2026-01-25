@@ -1,18 +1,20 @@
 ---
 name: aws-mcp-setup
-description: Configure AWS Documentation MCP server to query up-to-date AWS knowledge, APIs, and best practices. Use when setting up AWS MCP tools, configuring AWS documentation access, or when the user mentions AWS MCP, AWS documentation, or AWS API queries.
+description: Configure AWS MCP servers including AWS Documentation MCP, AWS IaC MCP Server, and Terraform MCP Server. Use when setting up AWS MCP tools, configuring AWS documentation access, CloudFormation/CDK validation, Terraform validation, or when the user mentions AWS MCP, AWS documentation, AWS API queries, IaC validation, or infrastructure as code tools.
 ---
 
 # AWS MCP Server Configuration Guide
 
 ## Overview
 
-This guide helps you configure AWS MCP tools for AI agents. Two options are available:
+This guide helps you configure AWS MCP tools for AI agents. Four options are available:
 
-| Option | Requirements | Capabilities |
-|--------|--------------|--------------|
-| **Full AWS MCP Server** | Python 3.10+, uvx, AWS credentials | Execute AWS API calls + documentation search |
-| **AWS Documentation MCP** | None | Documentation search only |
+| Option                    | Requirements                                  | Capabilities                                                                         |
+| ------------------------- | --------------------------------------------- | ------------------------------------------------------------------------------------ |
+| **Full AWS MCP Server**   | Python 3.10+, uvx, AWS credentials            | Execute AWS API calls + documentation search                                         |
+| **AWS Documentation MCP** | None                                          | Documentation search only                                                            |
+| **AWS IaC MCP Server**    | Python 3.10+, uvx, AWS credentials (optional) | CloudFormation validation, CDK docs, compliance checking, deployment troubleshooting |
+| **Terraform MCP Server**  | Python 3.10+, uvx, Terraform CLI, Checkov     | Terraform validation, security scanning, AWS provider docs, workflow execution       |
 
 ## Step 1: Check Existing Configuration
 
@@ -21,8 +23,11 @@ Before configuring, check if AWS MCP tools are already available using either me
 ### Method A: Check Available Tools (Recommended)
 
 Look for these tool name patterns in your agent's available tools:
+
 - `mcp__aws-mcp__*` or `mcp__aws__*` → Full AWS MCP Server configured
 - `mcp__*awsdocs*__aws___*` → AWS Documentation MCP configured
+- `mcp__*aws-iac*__*` or `mcp__*awslabs.aws-iac-mcp-server*__*` → AWS IaC MCP Server configured
+- `mcp__*terraform*__*` or `mcp__*awslabs.terraform-mcp-server*__*` → Terraform MCP Server configured
 
 **How to check**: Use the MCP file system tools to list available MCP servers and their tools.
 
@@ -30,21 +35,21 @@ Look for these tool name patterns in your agent's available tools:
 
 MCP servers use hierarchical configuration (precedence: local → project → user → enterprise):
 
-| Scope | File Location | Use Case |
-|-------|---------------|----------|
-| Local | `.cursor/mcp.json` (in project) | Personal/experimental |
-| Project | `.mcp.json` (project root) | Team-shared |
-| User | `~/.cursor/mcp.json` | Cross-project personal |
-| Enterprise | System managed directories | Organization-wide |
+| Scope      | File Location                   | Use Case               |
+| ---------- | ------------------------------- | ---------------------- |
+| Local      | `.cursor/mcp.json` (in project) | Personal/experimental  |
+| Project    | `.mcp.json` (project root)      | Team-shared            |
+| User       | `~/.cursor/mcp.json`            | Cross-project personal |
+| Enterprise | System managed directories      | Organization-wide      |
 
-Check these files for `mcpServers` containing `aws-mcp`, `aws`, or `awsdocs` keys:
+Check these files for `mcpServers` containing `aws-mcp`, `aws`, `awsdocs`, `aws-iac`, or `terraform` keys:
 
 ```bash
 # Check project config
-cat .mcp.json 2>/dev/null | grep -E '"(aws-mcp|aws|awsdocs)"'
+cat .mcp.json 2>/dev/null | grep -E '"(aws-mcp|aws|awsdocs|aws-iac|terraform)"'
 
 # Check user config
-cat ~/.cursor/mcp.json 2>/dev/null | grep -E '"(aws-mcp|aws|awsdocs)"'
+cat ~/.cursor/mcp.json 2>/dev/null | grep -E '"(aws-mcp|aws|awsdocs|aws-iac|terraform)"'
 ```
 
 If AWS MCP is already configured, no further setup needed.
@@ -68,26 +73,31 @@ aws sts get-caller-identity || echo "AWS credentials not configured"
 **Use when**: uvx available AND AWS credentials valid
 
 **Prerequisites**:
+
 - Python 3.10+ with `uv` package manager
 - AWS credentials configured (via profile, environment variables, or IAM role)
 
 **Required IAM Permissions**:
+
 ```json
 {
   "Version": "2012-10-17",
-  "Statement": [{
-    "Effect": "Allow",
-    "Action": [
-      "aws-mcp:InvokeMCP",
-      "aws-mcp:CallReadOnlyTool",
-      "aws-mcp:CallReadWriteTool"
-    ],
-    "Resource": "*"
-  }]
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "aws-mcp:InvokeMCP",
+        "aws-mcp:CallReadOnlyTool",
+        "aws-mcp:CallReadWriteTool"
+      ],
+      "Resource": "*"
+    }
+  ]
 }
 ```
 
 **Configuration** (add to your MCP settings):
+
 ```json
 {
   "mcpServers": {
@@ -96,7 +106,8 @@ aws sts get-caller-identity || echo "AWS credentials not configured"
       "args": [
         "mcp-proxy-for-aws@latest",
         "https://aws-mcp.us-east-1.api.aws/mcp",
-        "--metadata", "AWS_REGION=us-west-2"
+        "--metadata",
+        "AWS_REGION=us-west-2"
       ]
     }
   }
@@ -106,27 +117,30 @@ aws sts get-caller-identity || echo "AWS credentials not configured"
 **Credential Configuration Options**:
 
 1. **AWS Profile** (recommended for development):
- ```json
- "args": [
-   "mcp-proxy-for-aws@latest",
-   "https://aws-mcp.us-east-1.api.aws/mcp",
-   "--profile", "my-profile",
-   "--metadata", "AWS_REGION=us-west-2"
- ]
- ```
+
+```json
+"args": [
+  "mcp-proxy-for-aws@latest",
+  "https://aws-mcp.us-east-1.api.aws/mcp",
+  "--profile", "my-profile",
+  "--metadata", "AWS_REGION=us-west-2"
+]
+```
 
 2. **Environment Variables**:
- ```json
- "env": {
-   "AWS_ACCESS_KEY_ID": "...",
-   "AWS_SECRET_ACCESS_KEY": "...",
-   "AWS_REGION": "us-west-2"
- }
- ```
+
+```json
+"env": {
+  "AWS_ACCESS_KEY_ID": "...",
+  "AWS_SECRET_ACCESS_KEY": "...",
+  "AWS_REGION": "us-west-2"
+}
+```
 
 3. **IAM Role** (for EC2/ECS/Lambda): No additional config needed - uses instance credentials
 
 **Additional Options**:
+
 - `--region <region>`: Override AWS region
 - `--read-only`: Restrict to read-only tools
 - `--log-level <level>`: Set logging level (debug, info, warning, error)
@@ -136,11 +150,13 @@ aws sts get-caller-identity || echo "AWS credentials not configured"
 ### Option B: AWS Documentation MCP Server (No Auth)
 
 **Use when**:
+
 - No Python/uvx environment
 - No AWS credentials
 - Only need documentation search (no API execution)
 
 **Configuration**:
+
 ```json
 {
   "mcpServers": {
@@ -152,21 +168,155 @@ aws sts get-caller-identity || echo "AWS credentials not configured"
 }
 ```
 
+### Option C: AWS IaC MCP Server
+
+**Use when**: When uvx available AND AWS credentials are valid
+
+**Required IAM Permissions** (for deployment troubleshooting only):
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "cloudformation:DescribeStacks",
+        "cloudformation:DescribeStackEvents",
+        "cloudformation:DescribeStackResources",
+        "cloudtrail:LookupEvents"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+**Configuration** (add to your MCP settings):
+
+```json
+{
+  "mcpServers": {
+    "awslabs.aws-iac-mcp-server": {
+      "command": "uvx",
+      "args": ["awslabs.aws-iac-mcp-server@latest"],
+      "env": {
+        "AWS_PROFILE": "your-named-profile",
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}
+```
+
+**Windows Configuration**:
+
+```json
+{
+  "mcpServers": {
+    "awslabs.aws-iac-mcp-server": {
+      "disabled": false,
+      "timeout": 60,
+      "type": "stdio",
+      "command": "uv",
+      "args": [
+        "tool",
+        "run",
+        "--from",
+        "awslabs.aws-iac-mcp-server@latest",
+        "awslabs.aws-iac-mcp-server.exe"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR",
+        "AWS_PROFILE": "your-aws-profile",
+        "AWS_REGION": "us-east-1"
+      }
+    }
+  }
+}
+```
+
+### Option D: Terraform MCP Server
+
+**Use when**: When uvx, python, terraform CLI AND Checkov is installed.
+
+**Configuration** (add to your MCP settings):
+
+```json
+{
+  "mcpServers": {
+    "awslabs.terraform-mcp-server": {
+      "command": "uvx",
+      "args": ["awslabs.terraform-mcp-server@latest"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}
+```
+
+**Windows Configuration**:
+
+```json
+{
+  "mcpServers": {
+    "awslabs.terraform-mcp-server": {
+      "disabled": false,
+      "timeout": 60,
+      "type": "stdio",
+      "command": "uv",
+      "args": [
+        "tool",
+        "run",
+        "--from",
+        "awslabs.terraform-mcp-server@latest",
+        "awslabs.terraform-mcp-server.exe"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR",
+        "AWS_PROFILE": "your-aws-profile",
+        "AWS_REGION": "us-east-1"
+      }
+    }
+  }
+}
+```
+
+
 ## Step 3: Verification
 
 After configuration, verify tools are available:
 
 **For Full AWS MCP**:
+
 - Look for tools: `mcp__aws-mcp__aws___search_documentation`, `mcp__aws-mcp__aws___call_aws`
 
 **For Documentation MCP**:
+
 - Look for tools: `mcp__awsdocs__aws___search_documentation`, `mcp__awsdocs__aws___read_documentation`
+
+**For AWS IaC MCP Server**:
+
+- Look for tools: `mcp__*aws-iac*__validate_cloudformation_template`, `mcp__*aws-iac*__search_cdk_documentation`, `mcp__*awslabs.aws-iac-mcp-server*__*`
+
+**For Terraform MCP Server**:
+
+- Look for tools: `mcp__*terraform*__*`, `mcp__*awslabs.terraform-mcp-server*__*`
 
 ## Troubleshooting
 
-| Issue | Cause | Solution |
-|-------|-------|----------|
-| `uvx: command not found` | uv not installed | Install with `pip install uv` or use Option B |
-| `AccessDenied` error | Missing IAM permissions | Add aws-mcp:* permissions to IAM policy |
-| `InvalidSignatureException` | Credential issue | Check `aws sts get-caller-identity` |
-| Tools not appearing | MCP not started | Restart your agent after config change |
+| Issue                          | Cause                       | Solution                                                                   |
+| ------------------------------ | --------------------------- | -------------------------------------------------------------------------- |
+| `uvx: command not found`       | uv not installed            | Install with `pip install uv` or use Option B                              |
+| `AccessDenied` error           | Missing IAM permissions     | Add aws-mcp:\* permissions to IAM policy                                   |
+| `InvalidSignatureException`    | Credential issue            | Check `aws sts get-caller-identity`                                        |
+| Tools not appearing            | MCP not started             | Restart your agent after config change                                     |
+| `terraform: command not found` | Terraform CLI not installed | Install Terraform from https://developer.hashicorp.com/terraform/downloads |
+| `checkov: command not found`   | Checkov not installed       | Install with `pip install checkov` or `brew install checkov`               |
+| AWS IaC MCP tools missing      | Server not configured       | Add `awslabs.aws-iac-mcp-server` to MCP settings (see Option C)            |
+| Terraform MCP tools missing    | Server not configured       | Add `awslabs.terraform-mcp-server` to MCP settings (see Option D)          |
