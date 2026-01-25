@@ -157,8 +157,14 @@ awesome-cursor-skills/
 │   │   ├── security-audit.md
 │   │   └── setup-new-feature.md
 │   └── skills/               # Example skills
-│       └── aws-mcp-setup/    # AWS MCP server configuration skill
-│           └── SKILL.md
+│       ├── aws-mcp-setup/    # AWS MCP server configuration skill
+│       │   └── SKILL.md
+│       └── aws-cdk-development/  # AWS CDK development skill
+│           ├── SKILL.md
+│           ├── references/
+│           │   └── cdk-patterns.md
+│           └── scripts/
+│               └── validate-stack.sh
 ├── docs/
 │   └── templates/
 │       ├── rules.md          # Rules template
