@@ -11,18 +11,21 @@ Create a well-structured pull request with proper description, labels, and revie
    - Create or update README.md if already present
    - Ensure README.md accurately reflects the current state of the codebase
 
-2. **Prepare branch**
+2. **Create or update changelog**
+   - Use the changelog-generator agent to create user-friendly changelog entries
+
+3. **Prepare branch**
    - Ensure all changes are committed
    - Push branch to remote
    - Verify branch is up to date with main
 
-3. **Write PR description**
+4. **Write PR description**
    - Summarize changes clearly
    - Include context and motivation
    - List any breaking changes
    - Add screenshots if UI changes
 
-4. **Set up PR**
+5. **Set up PR**
    - Create PR with descriptive title
    - Add appropriate labels
    - Assign reviewers
