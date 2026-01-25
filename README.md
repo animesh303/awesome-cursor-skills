@@ -149,13 +149,16 @@ awesome-cursor-skills/
 │   │   ├── security-auditor.md  # Security review agent
 │   │   ├── test-runner.md    # Test execution agent
 │   │   └── verifier.md       # Work verification agent
-│   └── commands/             # Example commands
-│       ├── code-review-checklist.md
-│       ├── create-pr.md
-│       ├── onboard-new-developer.md
-│       ├── run-all-tests-and-fix.md
-│       ├── security-audit.md
-│       └── setup-new-feature.md
+│   ├── commands/             # Example commands
+│   │   ├── code-review-checklist.md
+│   │   ├── create-pr.md
+│   │   ├── onboard-new-developer.md
+│   │   ├── run-all-tests-and-fix.md
+│   │   ├── security-audit.md
+│   │   └── setup-new-feature.md
+│   └── skills/               # Example skills
+│       └── aws-mcp-setup/    # AWS MCP server configuration skill
+│           └── SKILL.md
 ├── docs/
 │   └── templates/
 │       ├── rules.md          # Rules template
