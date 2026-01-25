@@ -162,12 +162,25 @@ awesome-cursor-skills/
 │   └── skills/               # Example skills
 │       ├── aws-mcp-setup/    # AWS MCP server configuration skill
 │       │   └── SKILL.md
-│       └── aws-cdk-development/  # AWS CDK development skill
+│       ├── aws-cdk-development/  # AWS CDK development skill
+│       │   ├── SKILL.md
+│       │   ├── references/
+│       │   │   └── cdk-patterns.md
+│       │   └── scripts/
+│       │       └── validate-stack.sh
+│       └── aws-agentcore/    # AWS Bedrock AgentCore comprehensive expert
 │           ├── SKILL.md
-│           ├── references/
-│           │   └── cdk-patterns.md
-│           └── scripts/
-│               └── validate-stack.sh
+│           └── references/
+│               ├── browser.md
+│               ├── code-interpreter.md
+│               ├── credential-management.md
+│               ├── gateway-deployment.md
+│               ├── gateway-troubleshooting.md
+│               ├── gateway.md
+│               ├── identity.md
+│               ├── memory.md
+│               ├── observability.md
+│               └── runtime.md
 ├── docs/
 │   └── templates/
 │       ├── rules.md          # Rules template
