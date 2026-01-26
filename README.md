@@ -168,19 +168,26 @@ awesome-cursor-skills/
 │       │   │   └── cdk-patterns.md
 │       │   └── scripts/
 │       │       └── validate-stack.sh
-│       └── aws-agentcore/    # AWS Bedrock AgentCore comprehensive expert
+│       ├── aws-agentcore/    # AWS Bedrock AgentCore comprehensive expert
+│       │   ├── SKILL.md
+│       │   └── references/
+│       │       ├── browser.md
+│       │       ├── code-interpreter.md
+│       │       ├── credential-management.md
+│       │       ├── gateway-deployment.md
+│       │       ├── gateway-troubleshooting.md
+│       │       ├── gateway.md
+│       │       ├── identity.md
+│       │       ├── memory.md
+│       │       ├── observability.md
+│       │       └── runtime.md
+│       └── aws-agentcore-agent-workflow/  # Complete workflow for creating AI agents
 │           ├── SKILL.md
 │           └── references/
-│               ├── browser.md
-│               ├── code-interpreter.md
-│               ├── credential-management.md
-│               ├── gateway-deployment.md
-│               ├── gateway-troubleshooting.md
-│               ├── gateway.md
-│               ├── identity.md
-│               ├── memory.md
-│               ├── observability.md
-│               └── runtime.md
+│               ├── common-configurations.md
+│               ├── optional-services.md
+│               ├── testing.md
+│               └── troubleshooting.md
 ├── docs/
 │   └── templates/
 │       ├── rules.md          # Rules template
