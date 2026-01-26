@@ -1,20 +1,21 @@
 ---
 name: aws-mcp-setup
-description: Configure AWS MCP servers including AWS Documentation MCP, AWS IaC MCP Server, and Terraform MCP Server. Use when setting up AWS MCP tools, configuring AWS documentation access, CloudFormation/CDK validation, Terraform validation, or when the user mentions AWS MCP, AWS documentation, AWS API queries, IaC validation, or infrastructure as code tools.
+description: Configure AWS MCP servers including AWS Documentation MCP, AWS IaC MCP Server, Terraform MCP Server, and AWS Bedrock AgentCore MCP Server. Use when setting up AWS MCP tools, configuring AWS documentation access, CloudFormation/CDK validation, Terraform validation, Bedrock AgentCore documentation, or when the user mentions AWS MCP, AWS documentation, AWS API queries, IaC validation, infrastructure as code tools, or AgentCore.
 ---
 
 # AWS MCP Server Configuration Guide
 
 ## Overview
 
-This guide helps you configure AWS MCP tools for AI agents. Four options are available:
+This guide helps you configure AWS MCP tools for AI agents. Five options are available:
 
-| Option                    | Requirements                                  | Capabilities                                                                         |
-| ------------------------- | --------------------------------------------- | ------------------------------------------------------------------------------------ |
-| **Full AWS MCP Server**   | Python 3.10+, uvx, AWS credentials            | Execute AWS API calls + documentation search                                         |
-| **AWS Documentation MCP** | None                                          | Documentation search only                                                            |
-| **AWS IaC MCP Server**    | Python 3.10+, uvx, AWS credentials (optional) | CloudFormation validation, CDK docs, compliance checking, deployment troubleshooting |
-| **Terraform MCP Server**  | Python 3.10+, uvx, Terraform CLI, Checkov     | Terraform validation, security scanning, AWS provider docs, workflow execution       |
+| Option                           | Requirements                                  | Capabilities                                                                         |
+| -------------------------------- | --------------------------------------------- | ------------------------------------------------------------------------------------ |
+| **Full AWS MCP Server**          | Python 3.10+, uvx, AWS credentials            | Execute AWS API calls + documentation search                                         |
+| **AWS Documentation MCP**       | None                                          | Documentation search only                                                            |
+| **AWS IaC MCP Server**           | Python 3.10+, uvx, AWS credentials (optional) | CloudFormation validation, CDK docs, compliance checking, deployment troubleshooting |
+| **Terraform MCP Server**         | Python 3.10+, uvx, Terraform CLI, Checkov     | Terraform validation, security scanning, AWS provider docs, workflow execution       |
+| **Bedrock AgentCore MCP Server** | Python 3.10+, uvx                              | AgentCore documentation search, runtime/memory/gateway management guides             |
 
 ## Step 1: Check Existing Configuration
 
@@ -28,6 +29,7 @@ Look for these tool name patterns in your agent's available tools:
 - `mcp__*awsdocs*__aws___*` → AWS Documentation MCP configured
 - `mcp__*aws-iac*__*` or `mcp__*awslabs.aws-iac-mcp-server*__*` → AWS IaC MCP Server configured
 - `mcp__*terraform*__*` or `mcp__*awslabs.terraform-mcp-server*__*` → Terraform MCP Server configured
+- `mcp__*bedrock-agentcore*__*` or `mcp__*awslabs.amazon-bedrock-agentcore-mcp-server*__*` → Bedrock AgentCore MCP Server configured
 
 **How to check**: Use the MCP file system tools to list available MCP servers and their tools.
 
@@ -42,14 +44,14 @@ MCP servers use hierarchical configuration (precedence: local → project → us
 | User       | `~/.cursor/mcp.json`            | Cross-project personal |
 | Enterprise | System managed directories      | Organization-wide      |
 
-Check these files for `mcpServers` containing `aws-mcp`, `aws`, `awsdocs`, `aws-iac`, or `terraform` keys:
+Check these files for `mcpServers` containing `aws-mcp`, `aws`, `awsdocs`, `aws-iac`, `terraform`, or `bedrock-agentcore` keys:
 
 ```bash
 # Check project config
-cat .mcp.json 2>/dev/null | grep -E '"(aws-mcp|aws|awsdocs|aws-iac|terraform)"'
+cat .mcp.json 2>/dev/null | grep -E '"(aws-mcp|aws|awsdocs|aws-iac|terraform|bedrock-agentcore)"'
 
 # Check user config
-cat ~/.cursor/mcp.json 2>/dev/null | grep -E '"(aws-mcp|aws|awsdocs|aws-iac|terraform)"'
+cat ~/.cursor/mcp.json 2>/dev/null | grep -E '"(aws-mcp|aws|awsdocs|aws-iac|terraform|bedrock-agentcore)"'
 ```
 
 If AWS MCP is already configured, no further setup needed.
@@ -287,6 +289,52 @@ aws sts get-caller-identity || echo "AWS credentials not configured"
 }
 ```
 
+### Option E: AWS Bedrock AgentCore MCP Server
+
+**Use when**: When uvx AND python is already installed. 
+
+**Configuration** (add to your MCP settings):
+
+```json
+{
+  "mcpServers": {
+    "bedrock-agentcore-mcp-server": {
+      "command": "uvx",
+      "args": ["awslabs.amazon-bedrock-agentcore-mcp-server@latest"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": ["search_agentcore_docs", "fetch_agentcore_doc"]
+    }
+  }
+}
+```
+
+**Windows Configuration**:
+
+```json
+{
+  "mcpServers": {
+    "bedrock-agentcore-mcp-server": {
+      "disabled": false,
+      "timeout": 60,
+      "type": "stdio",
+      "command": "uv",
+      "args": [
+        "tool",
+        "run",
+        "--from",
+        "awslabs.amazon-bedrock-agentcore-mcp-server@latest",
+        "awslabs.amazon-bedrock-agentcore-mcp-server.exe"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      }
+    }
+  }
+}
+```
 
 ## Step 3: Verification
 
@@ -308,6 +356,10 @@ After configuration, verify tools are available:
 
 - Look for tools: `mcp__*terraform*__*`, `mcp__*awslabs.terraform-mcp-server*__*`
 
+**For Bedrock AgentCore MCP Server**:
+
+- Look for tools: `mcp__*bedrock-agentcore*__*`, `mcp__*awslabs.amazon-bedrock-agentcore-mcp-server*__search_agentcore_docs`, `mcp__*awslabs.amazon-bedrock-agentcore-mcp-server*__fetch_agentcore_doc`, `mcp__*awslabs.amazon-bedrock-agentcore-mcp-server*__manage_agentcore_*`
+
 ## Troubleshooting
 
 | Issue                          | Cause                       | Solution                                                                   |
@@ -318,5 +370,6 @@ After configuration, verify tools are available:
 | Tools not appearing            | MCP not started             | Restart your agent after config change                                     |
 | `terraform: command not found` | Terraform CLI not installed | Install Terraform from https://developer.hashicorp.com/terraform/downloads |
 | `checkov: command not found`   | Checkov not installed       | Install with `pip install checkov` or `brew install checkov`               |
-| AWS IaC MCP tools missing      | Server not configured       | Add `awslabs.aws-iac-mcp-server` to MCP settings (see Option C)            |
-| Terraform MCP tools missing    | Server not configured       | Add `awslabs.terraform-mcp-server` to MCP settings (see Option D)          |
+| AWS IaC MCP tools missing           | Server not configured       | Add `awslabs.aws-iac-mcp-server` to MCP settings (see Option C)            |
+| Terraform MCP tools missing         | Server not configured       | Add `awslabs.terraform-mcp-server` to MCP settings (see Option D)          |
+| Bedrock AgentCore MCP tools missing | Server not configured       | Add `bedrock-agentcore-mcp-server` to MCP settings (see Option E)          |
