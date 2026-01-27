@@ -1,13 +1,13 @@
 ---
 name: aws-mcp-setup
-description: Configure AWS MCP servers including AWS Documentation MCP, AWS IaC MCP Server, Terraform MCP Server, and AWS Bedrock AgentCore MCP Server. Use when setting up AWS MCP tools, configuring AWS documentation access, CloudFormation/CDK validation, Terraform validation, Bedrock AgentCore documentation, or when the user mentions AWS MCP, AWS documentation, AWS API queries, IaC validation, infrastructure as code tools, or AgentCore.
+description: Configure AWS MCP servers including AWS Documentation MCP, AWS IaC MCP Server, Terraform MCP Server, AWS Bedrock AgentCore MCP Server, and Context7 MCP Server. Use when setting up AWS MCP tools, configuring AWS documentation access, CloudFormation/CDK validation, Terraform validation, Bedrock AgentCore documentation, library documentation queries, or when the user mentions AWS MCP, AWS documentation, AWS API queries, IaC validation, infrastructure as code tools, AgentCore, or Context7.
 ---
 
 # AWS MCP Server Configuration Guide
 
 ## Overview
 
-This guide helps you configure AWS MCP tools for AI agents. Five options are available:
+This guide helps you configure AWS MCP tools for AI agents. Six options are available:
 
 | Option                           | Requirements                                  | Capabilities                                                                         |
 | -------------------------------- | --------------------------------------------- | ------------------------------------------------------------------------------------ |
@@ -16,6 +16,7 @@ This guide helps you configure AWS MCP tools for AI agents. Five options are ava
 | **AWS IaC MCP Server**           | Python 3.10+, uvx, AWS credentials (optional) | CloudFormation validation, CDK docs, compliance checking, deployment troubleshooting |
 | **Terraform MCP Server**         | Python 3.10+, uvx, Terraform CLI, Checkov     | Terraform validation, security scanning, AWS provider docs, workflow execution       |
 | **Bedrock AgentCore MCP Server** | Python 3.10+, uvx                              | AgentCore documentation search, runtime/memory/gateway management guides             |
+| **Context7 MCP Server**          | None                                          | Up-to-date documentation and code examples for any programming library or framework  |
 
 ## Step 1: Check Existing Configuration
 
@@ -30,6 +31,7 @@ Look for these tool name patterns in your agent's available tools:
 - `mcp__*aws-iac*__*` or `mcp__*awslabs.aws-iac-mcp-server*__*` → AWS IaC MCP Server configured
 - `mcp__*terraform*__*` or `mcp__*awslabs.terraform-mcp-server*__*` → Terraform MCP Server configured
 - `mcp__*bedrock-agentcore*__*` or `mcp__*awslabs.amazon-bedrock-agentcore-mcp-server*__*` → Bedrock AgentCore MCP Server configured
+- `mcp__*Context7*__*` or `mcp__*user-Context7*__*` → Context7 MCP Server configured
 
 **How to check**: Use the MCP file system tools to list available MCP servers and their tools.
 
@@ -44,14 +46,14 @@ MCP servers use hierarchical configuration (precedence: local → project → us
 | User       | `~/.cursor/mcp.json`            | Cross-project personal |
 | Enterprise | System managed directories      | Organization-wide      |
 
-Check these files for `mcpServers` containing `aws-mcp`, `aws`, `awsdocs`, `aws-iac`, `terraform`, or `bedrock-agentcore` keys:
+Check these files for `mcpServers` containing `aws-mcp`, `aws`, `awsdocs`, `aws-iac`, `terraform`, `bedrock-agentcore`, or `Context7` keys:
 
 ```bash
 # Check project config
-cat .mcp.json 2>/dev/null | grep -E '"(aws-mcp|aws|awsdocs|aws-iac|terraform|bedrock-agentcore)"'
+cat .mcp.json 2>/dev/null | grep -E '"(aws-mcp|aws|awsdocs|aws-iac|terraform|bedrock-agentcore|Context7)"'
 
 # Check user config
-cat ~/.cursor/mcp.json 2>/dev/null | grep -E '"(aws-mcp|aws|awsdocs|aws-iac|terraform|bedrock-agentcore)"'
+cat ~/.cursor/mcp.json 2>/dev/null | grep -E '"(aws-mcp|aws|awsdocs|aws-iac|terraform|bedrock-agentcore|Context7)"'
 ```
 
 If AWS MCP is already configured, no further setup needed.
@@ -336,6 +338,32 @@ aws sts get-caller-identity || echo "AWS credentials not configured"
 }
 ```
 
+### Option F: Context7 MCP Server
+
+**Use when**: You need up-to-date documentation and code examples for any programming library or framework.
+
+**Prerequisites**: None - Context7 MCP Server requires no additional dependencies or credentials.
+
+**Capabilities**:
+- Resolve library names to Context7-compatible library IDs
+- Query up-to-date documentation and code examples for any library
+- Support for popular libraries like MongoDB, Next.js, Supabase, React, Express.js, and many more
+
+**Configuration** (add to your MCP settings):
+
+The Context7 MCP Server is typically configured automatically by Cursor. If you need to configure it manually, check your MCP settings file for a server named `user-Context7` or `Context7`.
+
+**Usage**:
+1. Use `resolve-library-id` to find the Context7-compatible library ID for a package name
+2. Use `query-docs` with the library ID to retrieve documentation and code examples
+
+**Example Workflow**:
+- Query: "How to set up authentication with JWT in Express.js"
+- Step 1: Call `resolve-library-id` with libraryName: "express" and query: "JWT authentication"
+- Step 2: Use the returned library ID (e.g., "/expressjs/express") with `query-docs` to get documentation
+
+**Note**: Context7 provides documentation for a wide range of libraries. If a library is not found, try alternative names or check Context7's supported libraries list.
+
 ## Step 3: Verification
 
 After configuration, verify tools are available:
@@ -360,6 +388,10 @@ After configuration, verify tools are available:
 
 - Look for tools: `mcp__*bedrock-agentcore*__*`, `mcp__*awslabs.amazon-bedrock-agentcore-mcp-server*__search_agentcore_docs`, `mcp__*awslabs.amazon-bedrock-agentcore-mcp-server*__fetch_agentcore_doc`, `mcp__*awslabs.amazon-bedrock-agentcore-mcp-server*__manage_agentcore_*`
 
+**For Context7 MCP Server**:
+
+- Look for tools: `mcp__*Context7*__query-docs`, `mcp__*Context7*__resolve-library-id`, `mcp__*user-Context7*__*`
+
 ## Troubleshooting
 
 | Issue                          | Cause                       | Solution                                                                   |
@@ -373,3 +405,4 @@ After configuration, verify tools are available:
 | AWS IaC MCP tools missing           | Server not configured       | Add `awslabs.aws-iac-mcp-server` to MCP settings (see Option C)            |
 | Terraform MCP tools missing         | Server not configured       | Add `awslabs.terraform-mcp-server` to MCP settings (see Option D)          |
 | Bedrock AgentCore MCP tools missing | Server not configured       | Add `bedrock-agentcore-mcp-server` to MCP settings (see Option E)          |
+| Context7 MCP tools missing          | Server not configured       | Context7 is typically auto-configured. Check MCP settings for `user-Context7` or `Context7` server |
