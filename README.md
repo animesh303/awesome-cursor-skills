@@ -148,6 +148,7 @@ awesome-cursor-skills/
 │   │   ├── aws-diagram-generator.md  # AWS architecture diagram generator
 │   │   ├── changelog-generator.md   # Automated changelog creator
 │   │   ├── debugger.md       # Debugging assistant
+│   │   ├── github-actions-validator.md  # GitHub Actions workflow validator
 │   │   ├── iac-validator.md  # Infrastructure as Code validator
 │   │   ├── security-auditor.md  # Security review agent
 │   │   ├── test-runner.md    # Test execution agent
