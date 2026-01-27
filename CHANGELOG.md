@@ -15,3 +15,4 @@ All notable changes to this project will be documented in this file.
 - **Agent Skills Best Practices**: Refactored workflow skill to follow Agent Skills best practices with progressive disclosure, concise main file (144 lines), and detailed content in reference files.
 - **MCP-First Approach**: Removed all AWS CLI command examples from workflow skill, using MCP servers exclusively for operations.
 - **Create PR Command**: Updated the `create-pr` command to include a step for generating changelog entries using the changelog-generator agent, ensuring PRs include proper change documentation.
+- **Create PR Command**: Enhanced the `create-pr` command workflow to require explicit target branch confirmation before proceeding, preventing accidental PRs to wrong branches. Updated all step references to use "target branch" instead of hardcoded "main" for better flexibility.
