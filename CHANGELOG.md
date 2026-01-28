@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - **GitHub Actions Validator Subagent**: Added comprehensive GitHub Actions workflow validation subagent that validates workflow structure, checks reusable actions for latest versions, and verifies runtime/utility versions (Python, Node.js, Terraform, etc.). Automatically fixes outdated versions and structural issues. Supports MCP server integration (Context7) and web search fallback for version checking. Runs in background with parallel processing support.
 - **AWS AgentCore Agent Workflow Skill**: Added comprehensive workflow skill for creating complete AI agents on AWS Bedrock using AgentCore services. Provides step-by-step guidance for Runtime creation, agent configuration, and optional service enhancements (Memory, Gateway, Code Interpreter, Browser, Observability). Uses MCP servers exclusively for all operations.
 - **AWS AgentCore Skill**: Added comprehensive AWS Bedrock AgentCore skill for deploying and managing all AgentCore services including Gateway, Runtime, Memory, Identity, Code Interpreter, Browser, and Observability. Includes detailed documentation and reference guides for each service.
+- **JIRA Epic Generation Skill**: Added `jira-epic-generation` skill to generate epics, stories, and tasks from a requirements document (PRD/BRD/SRS) and create them in JIRA via Atlassian MCP.
 
 ### 🔧 Improvements
 

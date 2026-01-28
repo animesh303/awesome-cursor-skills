@@ -182,6 +182,8 @@ awesome-cursor-skills/
 │       │       ├── memory.md
 │       │       ├── observability.md
 │       │       └── runtime.md
+│       ├── jira-epic-generation/  # Generate JIRA issues from requirements docs
+│       │   └── SKILL.md
 │       └── aws-agentcore-agent-workflow/  # Complete workflow for creating AI agents
 │           ├── SKILL.md
 │           └── references/
