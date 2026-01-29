@@ -145,7 +145,7 @@ Commands are quick workflows and repeatable tasks that can be triggered with a s
 awesome-cursor-skills/
 ├── .cursor/
 │   ├── agents/               # Example subagents
-│   │   ├── aws-diagram-generator.md  # AWS architecture diagram generator
+│   │   ├── architecture-diagram-generator.md  # Architecture diagram generator (Mermaid, codebase analysis)
 │   │   ├── changelog-generator.md   # Automated changelog creator
 │   │   ├── debugger.md       # Debugging assistant
 │   │   ├── github-actions-validator.md  # GitHub Actions workflow validator
