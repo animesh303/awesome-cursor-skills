@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+_No changes yet._
+
+## [1.0.0] - 2026-01-30
+
 ### ✨ New Features
 
 - **Orchestrator, Planner, and Implementer Agents**: Added orchestrated delivery flow: **planner** (analyzes requirements, produces technical plan) → **implementer** (one per tech stack, parallel) → **verifier**. Orchestrator coordinates the flow, prompts for clarifications, and uses MCP/skills/rules. Implementer updates `.gitignore` per stack and reports blockers.
