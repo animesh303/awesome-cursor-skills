@@ -25,22 +25,24 @@ Browse the [templates directory](./docs/templates/) to find ready-to-use templat
 ### Installation
 
 1. **Clone this repository:**
+
    ```bash
    git clone https://github.com/yourusername/awesome-cursor-skills.git
    ```
 
 2. **Copy templates to your project:**
+
    ```bash
    # Copy rules template
    cp docs/templates/rules.md .cursor/rules/my-rule.md
-   
+
    # Copy subagents template
    cp docs/templates/subagents.md .cursor/agents/my-subagent.md
-   
+
    # Copy skills template
    mkdir -p .cursor/skills/my-skill
    cp docs/templates/skills.md .cursor/skills/my-skill/SKILL.md
-   
+
    # Copy commands template
    cp docs/templates/commands.md .cursor/commands/my-command.md
    ```
@@ -54,11 +56,13 @@ Browse the [templates directory](./docs/templates/) to find ready-to-use templat
 Rules provide persistent AI guidance that helps Cursor understand your project's conventions, patterns, and best practices.
 
 **Location:**
+
 - Project rules: `.cursor/rules/`
 - User rules: `Cursor Settings → Rules`
 - Team rules: Cursor Dashboard (Team/Enterprise plans)
 
 **Features:**
+
 - Always apply or apply intelligently based on context
 - File-specific rules using glob patterns
 - Reference files using `@filename` syntax
@@ -71,10 +75,12 @@ Rules provide persistent AI guidance that helps Cursor understand your project's
 Subagents are specialized AI assistants that handle specific tasks or domains. They can be automatically invoked by the main agent or called explicitly.
 
 **Location:**
+
 - Project subagents: `.cursor/agents/`
 - User subagents: `~/.cursor/agents/`
 
 **Features:**
+
 - Automatic delegation based on task complexity
 - Explicit invocation with `/subagent-name`
 - Parallel execution for multiple tasks
@@ -87,10 +93,12 @@ Subagents are specialized AI assistants that handle specific tasks or domains. T
 Skills extend agent capabilities with reusable instructions, scripts, and assets. They follow an open standard and can be shared across different AI agents.
 
 **Location:**
+
 - Project skills: `.cursor/skills/`
 - User skills: `~/.cursor/skills/`
 
 **Features:**
+
 - Automatic or manual invocation
 - Include executable scripts
 - Reference documentation and assets
@@ -104,11 +112,13 @@ Skills extend agent capabilities with reusable instructions, scripts, and assets
 Commands are quick workflows and repeatable tasks that can be triggered with a slash prefix.
 
 **Location:**
+
 - Project commands: `.cursor/commands/`
 - Global commands: `~/.cursor/commands/`
 - Team commands: Cursor Dashboard (Team/Enterprise plans)
 
 **Features:**
+
 - Simple markdown format
 - Parameter support
 - Checklists and structured workflows
@@ -146,16 +156,19 @@ awesome-cursor-skills/
 ├── .cursor/
 │   ├── agents/               # Example subagents
 │   │   ├── architecture-diagram-generator.md  # Architecture diagram generator (Mermaid, codebase analysis)
-│   ├── rules/                # Project rules (coding standards, conventions)
-│   │   ├── python-standards.mdc   # Python coding standards for AWS development
-│   │   └── terraform-standards.mdc  # Terraform coding standards
 │   │   ├── changelog-generator.md   # Automated changelog creator
 │   │   ├── debugger.md       # Debugging assistant
 │   │   ├── github-actions-validator.md  # GitHub Actions workflow validator
 │   │   ├── iac-validator.md  # Infrastructure as Code validator
+│   │   ├── implementer.md    # Implements code from a plan for a given tech stack (used by orchestrator)
+│   │   ├── orchestrator.md   # Coordinates planner → implementers (parallel) → verifier
+│   │   ├── planner.md        # Technical planner; produces structured plan for implementers
 │   │   ├── security-auditor.md  # Security review agent
 │   │   ├── test-runner.md    # Test execution agent
-│   │   └── verifier.md       # Work verification agent
+│   │   └── verifier.md       # Work verification agent (plan/acceptance criteria check)
+│   ├── rules/                # Project rules (coding standards, conventions)
+│   │   ├── python-standards.mdc   # Python coding standards for AWS development
+│   │   └── terraform-standards.mdc  # Terraform coding standards
 │   ├── commands/             # Example commands
 │   │   ├── code-review-checklist.md
 │   │   ├── create-pr.md
@@ -185,15 +198,22 @@ awesome-cursor-skills/
 │       │       ├── memory.md
 │       │       ├── observability.md
 │       │       └── runtime.md
+│       ├── aws-agentcore-agent-workflow/  # Complete workflow for creating AI agents
+│       │   ├── SKILL.md
+│       │   └── references/
+│       │       ├── common-configurations.md
+│       │       ├── optional-services.md
+│       │       ├── testing.md
+│       │       └── troubleshooting.md
 │       ├── jira-epic-generation/  # Generate JIRA issues from requirements docs
 │       │   └── SKILL.md
-│       └── aws-agentcore-agent-workflow/  # Complete workflow for creating AI agents
+│       └── jira-ticket-technical-design-workflow/  # JIRA ticket → TDD in docs/jira/<KEY>/; update JIRA (Atlassian MCP)
 │           ├── SKILL.md
 │           └── references/
-│               ├── common-configurations.md
-│               ├── optional-services.md
-│               ├── testing.md
-│               └── troubleshooting.md
+│               ├── jira-update.md
+│               ├── jql-and-paths.md
+│               ├── mermaid-diagram.md
+│               └── technical-design-template.md
 ├── docs/
 │   └── templates/
 │       ├── rules.md          # Rules template
