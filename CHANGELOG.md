@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file.
 
 ### ✨ New Features
 
+- **Orchestrator, Planner, and Implementer Agents**: Added orchestrated delivery flow: **planner** (analyzes requirements, produces technical plan) → **implementer** (one per tech stack, parallel) → **verifier**. Orchestrator coordinates the flow, prompts for clarifications, and uses MCP/skills/rules. Implementer updates `.gitignore` per stack and reports blockers.
+- **JIRA Ticket to Technical Design Workflow Skill**: Added `jira-ticket-technical-design-workflow` skill: fetch open JIRA tickets via Atlassian MCP → user picks one → generate TDD with inline Mermaid in `docs/jira/<KEY>/technical-design.md` → update JIRA (comment with design summary, transition to In Progress, assign). Includes references for JQL, Mermaid conventions, and JIRA update template.
+
+### 🔧 Improvements
+
+- **Verifier Agent**: Updated description and steps for use by the orchestrator; verifier now compares implementation to the technical plan and acceptance criteria and reports mismatches.
+
 - **Project Rules (Terraform & Python Standards)**: Added `.cursor/rules/` with agent-requestable rules: `terraform-standards.mdc` for Terraform/IaC best practices (structure, variables, modules, state) and `python-standards.mdc` for Python on AWS (Lambda, API Gateway, boto3, serverless patterns).
 - **Architecture Diagram Generator Agent**: Replaced AWS-specific diagram agent with a generic architecture diagram generator that analyzes the codebase and produces Mermaid diagrams. Supports multiple views (by layer, domain, deployment, data flow, package/module), overview + focused diagrams, and placement in existing design docs or new `docs/architecture.md`.
 - **GitHub Actions Validator Subagent**: Added comprehensive GitHub Actions workflow validation subagent that validates workflow structure, checks reusable actions for latest versions, and verifies runtime/utility versions (Python, Node.js, Terraform, etc.). Automatically fixes outdated versions and structural issues. Supports MCP server integration (Context7) and web search fallback for version checking. Runs in background with parallel processing support.
