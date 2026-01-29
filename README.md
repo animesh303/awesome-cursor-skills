@@ -146,6 +146,9 @@ awesome-cursor-skills/
 ├── .cursor/
 │   ├── agents/               # Example subagents
 │   │   ├── architecture-diagram-generator.md  # Architecture diagram generator (Mermaid, codebase analysis)
+│   ├── rules/                # Project rules (coding standards, conventions)
+│   │   ├── python-standards.mdc   # Python coding standards for AWS development
+│   │   └── terraform-standards.mdc  # Terraform coding standards
 │   │   ├── changelog-generator.md   # Automated changelog creator
 │   │   ├── debugger.md       # Debugging assistant
 │   │   ├── github-actions-validator.md  # GitHub Actions workflow validator
