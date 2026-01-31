@@ -4,7 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-_No changes yet._
+### ✨ New Features
+
+- **AWS Diagram Generator Agent**: Added `aws-diagram-generator` agent for AWS architecture diagrams using MCP servers. Supports Python diagrams package DSL and YAML-based Diagram-as-Code (e.g. `user-awsdac-mcp-server`). Generates PNG diagrams with proper AWS resource relationships, grouping, and best practices for complex architectures.
+
+### 🔧 Improvements
+
+- **Implementer Agent**: Added "Analyze codebase" and "Plan directory structure" steps before applying standards and implementing. Ensures new code aligns with existing layout and reduces conflicts.
+- **Terraform Standards Rule**: Simplified code structure guidance (main config, variables, outputs). Removed dedicated Modules section; documentation scope is configurations only.
 
 ## [1.0.0] - 2026-01-30
 
