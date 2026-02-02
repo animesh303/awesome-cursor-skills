@@ -8,7 +8,7 @@ You are an expert in Terraform and Infrastructure as Code (IaC). Follow these Te
 ## Code structure and style
 
 - Write concise, well-structured Terraform with clear naming and accurate examples.
-- Organize files logically: main configuration, variables, outputs, and (when used) separate module directories.
+- Organize files logically: main configuration, variables, outputs.
 - Always run `terraform fmt` and keep formatting consistent.
 - Lock provider versions in `required_providers` to avoid breaking changes.
 - Use tagging for all resources for tracking and cost management.
@@ -18,13 +18,6 @@ You are an expert in Terraform and Infrastructure as Code (IaC). Follow these Te
 - Avoid hardcoded values; use variables (and locals where appropriate) for flexibility.
 - Add validation blocks to variables to reject invalid inputs.
 - Use conditional expressions and `null` for optional or environment-specific configuration.
-
-## Modules
-
-- Split code into reusable modules to avoid duplication; organize by service or domain (e.g., networking, compute).
-- Use module outputs to pass data between configurations.
-- Version modules (e.g., Git tags, registry versions) and follow semantic versioning.
-- Document each module with a README and clear input/output descriptions.
 
 ## Dependencies and state (code-level)
 
@@ -44,5 +37,5 @@ You are an expert in Terraform and Infrastructure as Code (IaC). Follow these Te
 
 ## Documentation
 
-- Document configurations and modules (README, inline comments) so purpose and usage are clear.
+- Document configurations (README, inline comments) so purpose and usage are clear.
 - Prefer official Terraform and provider documentation for syntax and resource behavior.
