@@ -156,6 +156,7 @@ awesome-cursor-skills/
 ├── .cursor/
 │   ├── agents/               # Example subagents
 │   │   ├── architecture-diagram-generator.md  # Architecture diagram generator (Mermaid, codebase analysis)
+│   │   ├── aws-diagram-generator.md  # AWS architecture diagrams via MCP (Python DSL or YAML Diagram-as-Code)
 │   │   ├── changelog-generator.md   # Automated changelog creator
 │   │   ├── debugger.md       # Debugging assistant
 │   │   ├── github-actions-validator.md  # GitHub Actions workflow validator
