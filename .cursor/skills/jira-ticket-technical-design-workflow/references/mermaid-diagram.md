@@ -4,7 +4,7 @@
 
 **Types:** flowchart (default; use subgraph), sequenceDiagram, erDiagram, stateDiagram when ticket implies.
 
-**Conventions:** subgraphs, clear labels (`id[Label]`), TB/LR, `-->` / `-.->`; one idea per diagram.
+**Conventions:** subgraphs, clear labels (`id[Label]`), TB/LR, `-->` / `-.->`; one idea per diagram. For line breaks inside node labels use `<br/>` (not `\n`), so markdown and renderers show proper breaks.
 
 **Example**
 

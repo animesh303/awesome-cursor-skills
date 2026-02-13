@@ -7,10 +7,12 @@ All notable changes to this project will be documented in this file.
 ### ✨ New Features
 
 - **AWS Diagram Generator Agent**: Added `aws-diagram-generator` agent for AWS architecture diagrams using MCP servers. Supports Python diagrams package DSL and YAML-based Diagram-as-Code (e.g. `user-awsdac-mcp-server`). Generates PNG diagrams with proper AWS resource relationships, grouping, and best practices for complex architectures.
+- **Terraform Module Version Updater Agent**: Added `terraform-module-version-updater` agent that discovers Terraform files in the repo and updates module versions from a user-provided module→version map (file or inline). Targets `app.terraform.io/sseplc/<module>/aws` sources; changes only the `version` attribute and reports changes and unscanned modules.
 
 ### 🔧 Improvements
 
-- **Implementer Agent**: Added "Analyze codebase" and "Plan directory structure" steps before applying standards and implementing. Ensures new code aligns with existing layout and reduces conflicts.
+- **Implementer Agent**: Set model to `claude-4.6-opus-high-thinking` for implementation tasks. Added "Analyze codebase" and "Plan directory structure" steps before applying standards and implementing. Ensures new code aligns with existing layout and reduces conflicts.
+- **JIRA TDD Skill (Mermaid)**: Documented that line breaks inside Mermaid node labels should use `<br/>` (not `\n`) for correct rendering in markdown and diagram renderers.
 - **Terraform Standards Rule**: Simplified code structure guidance (main config, variables, outputs). Removed dedicated Modules section; documentation scope is configurations only.
 
 ## [1.0.0] - 2026-01-30
