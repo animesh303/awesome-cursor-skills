@@ -165,6 +165,7 @@ awesome-cursor-skills/
 │   │   ├── orchestrator.md   # Coordinates planner → implementers (parallel) → verifier
 │   │   ├── planner.md        # Technical planner; produces structured plan for implementers
 │   │   ├── security-auditor.md  # Security review agent
+│   │   ├── terraform-module-version-updater.md  # Terraform module version updater (user-provided module→version map)
 │   │   ├── test-runner.md    # Test execution agent
 │   │   └── verifier.md       # Work verification agent (plan/acceptance criteria check)
 │   ├── rules/                # Project rules (coding standards, conventions)
@@ -206,6 +207,16 @@ awesome-cursor-skills/
 │       │       ├── optional-services.md
 │       │       ├── testing.md
 │       │       └── troubleshooting.md
+│       ├── aws-iac-converter/    # Convert AWS IaC between CloudFormation, CDK, Terraform
+│       │   ├── SKILL.md
+│       │   ├── references/
+│       │   │   ├── analysis-guide.md
+│       │   │   ├── conversion-patterns.md
+│       │   │   ├── report-template.md
+│       │   │   └── verification-checklist.md
+│       │   └── scripts/
+│       │       ├── analyze-repo.sh
+│       │       └── validate-conversion.sh
 │       ├── jira-epic-generation/  # Generate JIRA issues from requirements docs
 │       │   └── SKILL.md
 │       └── jira-ticket-technical-design-workflow/  # JIRA ticket → TDD in docs/jira/<KEY>/; update JIRA (Atlassian MCP)

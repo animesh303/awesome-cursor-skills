@@ -7,10 +7,13 @@ All notable changes to this project will be documented in this file.
 ### ✨ New Features
 
 - **AWS Diagram Generator Agent**: Added `aws-diagram-generator` agent for AWS architecture diagrams using MCP servers. Supports Python diagrams package DSL and YAML-based Diagram-as-Code (e.g. `user-awsdac-mcp-server`). Generates PNG diagrams with proper AWS resource relationships, grouping, and best practices for complex architectures.
+- **Terraform Module Version Updater Agent**: Added `terraform-module-version-updater` agent to discover Terraform files and update module versions from a user-provided module→version map (file or inline). Scans `*.tf` files, updates only `version` in `module` blocks with `app.terraform.io/sseplc/<module>/aws` sources, and reports changes and unscanned modules.
+- **AWS IaC Converter Skill**: Added `aws-iac-converter` skill to convert AWS Infrastructure as Code between CloudFormation, CDK (TypeScript/Python), and Terraform. Seven-phase workflow: repo input → analysis & detection → target selection → conversion planning → implementation (via orchestrator) → verification → reporting. Uses AWS IaC MCP, Terraform MCP, and AWS Documentation MCP; includes analysis script, validation script, and conversion report template.
 
 ### 🔧 Improvements
 
-- **Implementer Agent**: Added "Analyze codebase" and "Plan directory structure" steps before applying standards and implementing. Ensures new code aligns with existing layout and reduces conflicts.
+- **Implementer Agent**: Set model to `claude-4.6-opus-high-thinking` for implementation tasks. Added "Analyze codebase" and "Plan directory structure" steps before applying standards and implementing. Ensures new code aligns with existing layout and reduces conflicts.
+- **JIRA Ticket Technical Design Workflow**: Mermaid diagram reference updated: use `<br/>` (not `\n`) for line breaks inside node labels so markdown and renderers show proper breaks.
 - **Terraform Standards Rule**: Simplified code structure guidance (main config, variables, outputs). Removed dedicated Modules section; documentation scope is configurations only.
 
 ## [1.0.0] - 2026-01-30
