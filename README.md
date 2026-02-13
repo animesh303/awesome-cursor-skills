@@ -165,7 +165,7 @@ awesome-cursor-skills/
 │   │   ├── orchestrator.md   # Coordinates planner → implementers (parallel) → verifier
 │   │   ├── planner.md        # Technical planner; produces structured plan for implementers
 │   │   ├── security-auditor.md  # Security review agent
-│   │   ├── terraform-module-version-updater.md  # Terraform module version updater (user-provided module→version map)
+│   │   ├── terraform-module-version-updater.md  # Updates Terraform module versions from user-provided map
 │   │   ├── test-runner.md    # Test execution agent
 │   │   └── verifier.md       # Work verification agent (plan/acceptance criteria check)
 │   ├── rules/                # Project rules (coding standards, conventions)
