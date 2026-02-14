@@ -207,6 +207,16 @@ awesome-cursor-skills/
 │       │       ├── optional-services.md
 │       │       ├── testing.md
 │       │       └── troubleshooting.md
+│       ├── aws-iac-converter/    # Convert AWS IaC between CloudFormation, CDK, Terraform
+│       │   ├── SKILL.md
+│       │   ├── references/
+│       │   │   ├── analysis-guide.md
+│       │   │   ├── conversion-patterns.md
+│       │   │   ├── report-template.md
+│       │   │   └── verification-checklist.md
+│       │   └── scripts/
+│       │       ├── analyze-repo.sh
+│       │       └── validate-conversion.sh
 │       ├── jira-epic-generation/  # Generate JIRA issues from requirements docs
 │       │   └── SKILL.md
 │       └── jira-ticket-technical-design-workflow/  # JIRA ticket → TDD in docs/jira/<KEY>/; update JIRA (Atlassian MCP)

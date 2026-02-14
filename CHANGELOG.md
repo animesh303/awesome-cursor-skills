@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - **AWS Diagram Generator Agent**: Added `aws-diagram-generator` agent for AWS architecture diagrams using MCP servers. Supports Python diagrams package DSL and YAML-based Diagram-as-Code (e.g. `user-awsdac-mcp-server`). Generates PNG diagrams with proper AWS resource relationships, grouping, and best practices for complex architectures.
 - **Terraform Module Version Updater Agent**: Added `terraform-module-version-updater` agent that discovers Terraform files in the repo and updates module versions from a user-provided module→version map (file or inline). Targets `app.terraform.io/sseplc/<module>/aws` sources; changes only the `version` attribute and reports changes and unscanned modules.
+- **AWS IaC Converter Skill**: Added `aws-iac-converter` skill to convert AWS Infrastructure as Code between CloudFormation, CDK (TypeScript/Python), and Terraform. Seven-phase workflow: repo input → analysis & detection → target selection → conversion planning → implementation (via orchestrator) → verification → reporting. Uses AWS IaC MCP, Terraform MCP, and AWS Documentation MCP; includes analysis script, validation script, and conversion report template.
 
 ### 🔧 Improvements
 
