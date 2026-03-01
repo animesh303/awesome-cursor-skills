@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__aws-mcp__*",
+      "mcp__awsdocs__*",
+      "mcp__awslabs.aws-iac-mcp-server__*",
+      "mcp__awslabs.terraform-mcp-server__*",
+      "mcp__bedrock-agentcore-mcp-server__*",
+      "mcp__user-Context7__*",
+      "mcp__user-Atlassian__*",
+      "Bash(cdk *)",
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(terraform *)",
+      "Bash(aws *)",
+      "Bash(git *)",
+      "Bash(pip *)",
+      "Bash(python *)"
+    ]
+  }
+}

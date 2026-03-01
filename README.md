@@ -1,15 +1,19 @@
 # Awesome Cursor Skills
 
-A curated collection of awesome Cursor rules, agents, skills, commands, and templates to enhance your development workflow with Cursor AI.
+A curated collection of Cursor AI agents, commands, skills, and rules for AWS development workflows—plus equivalent **Claude Code** configurations in `.claude/` so you can use the same workflows in Claude Code.
 
 ## 📚 What's Inside
 
-This repository contains templates and examples for:
+- **Cursor** (`.cursor/`): agents, commands, skills, and rules
+- **Claude Code** (`.claude/`): 13 subagents, 6 commands, 6 skills, and `CLAUDE.md` (always-on context)
+- **MCP**: Project-level config in `.mcp.json` (team-shared); user-scoped AWS/Bedrock/Atlassian via `/aws-mcp-setup`
 
-- **Rules** - Persistent AI guidance for your codebase
-- **Subagents** - Specialized AI assistants for specific tasks
-- **Skills** - Reusable agent capabilities with scripts and assets
-- **Commands** - Quick workflows and repeatable tasks
+Templates and examples for:
+
+- **Rules** - Persistent AI guidance (Python/Terraform standards, project conventions)
+- **Subagents** - Specialized AI assistants (orchestrator, planner, implementer, verifier, debugger, test-runner, security-auditor, changelog-generator, diagram generators, validators)
+- **Skills** - Reusable capabilities with context and hooks (AWS MCP, CDK, IaC converter, JIRA, AgentCore)
+- **Commands** - Slash workflows (`/create-pr`, `/setup-new-feature`, `/onboard-new-developer`, etc.)
 
 ## 🚀 Quick Start
 
@@ -153,9 +157,8 @@ Commands are quick workflows and repeatable tasks that can be triggered with a s
 
 ```
 awesome-cursor-skills/
-├── .cursor/
-│   ├── agents/               # Example subagents
-│   │   ├── architecture-diagram-generator.md  # Architecture diagram generator (Mermaid, codebase analysis)
+├── .cursor/                  # Cursor AI configurations
+│   ├── agents/               # 13 subagent definitions (see tables below)
 │   │   ├── aws-diagram-generator.md  # AWS architecture diagrams via MCP (Python DSL or YAML Diagram-as-Code)
 │   │   ├── changelog-generator.md   # Automated changelog creator
 │   │   ├── debugger.md       # Debugging assistant
@@ -168,18 +171,16 @@ awesome-cursor-skills/
 │   │   ├── terraform-module-version-updater.md  # Updates Terraform module versions from user-provided map
 │   │   ├── test-runner.md    # Test execution agent
 │   │   └── verifier.md       # Work verification agent (plan/acceptance criteria check)
-│   ├── rules/                # Project rules (coding standards, conventions)
-│   │   ├── python-standards.mdc   # Python coding standards for AWS development
-│   │   └── terraform-standards.mdc  # Terraform coding standards
-│   ├── commands/             # Example commands
+│   ├── rules/                # Python & Terraform coding standards
+│   ├── commands/             # 6 slash commands
 │   │   ├── code-review-checklist.md
 │   │   ├── create-pr.md
 │   │   ├── onboard-new-developer.md
 │   │   ├── run-all-tests-and-fix.md
 │   │   ├── security-audit.md
 │   │   └── setup-new-feature.md
-│   └── skills/               # Example skills
-│       ├── aws-mcp-setup/    # AWS MCP server configuration skill
+│   └── skills/               # 6 skills (AWS MCP, CDK, IaC, JIRA, AgentCore)
+│       ├── aws-mcp-setup/    # AWS MCP server configuration
 │       │   └── SKILL.md
 │       ├── aws-cdk-development/  # AWS CDK development skill
 │       │   ├── SKILL.md
@@ -226,6 +227,9 @@ awesome-cursor-skills/
 │               ├── jql-and-paths.md
 │               ├── mermaid-diagram.md
 │               └── technical-design-template.md
+├── .claude/                  # Claude Code (same agents, commands, skills + settings.json)
+├── CLAUDE.md                 # Always-on context for Claude Code
+├── .mcp.json                 # Project-level MCP (team-shared)
 ├── docs/
 │   └── templates/
 │       ├── rules.md          # Rules template
@@ -234,6 +238,50 @@ awesome-cursor-skills/
 │       └── commands.md       # Commands template
 └── README.md                 # This file
 ```
+
+### Agents (Cursor & Claude Code)
+
+| Agent | Description |
+|-------|-------------|
+| `orchestrator` | Coordinates planner → implementers (parallel) → verifier |
+| `planner` | Technical requirements → structured plan |
+| `implementer` | Implements from plan for a given tech stack |
+| `verifier` | Validates work against plan and acceptance criteria |
+| `debugger` | Debugging specialist for errors and test failures |
+| `test-runner` | Test automation; runs tests and fixes failures |
+| `security-auditor` | Security specialist for auth, payments, sensitive data |
+| `changelog-generator` | User-facing changelogs from git history |
+| `architecture-diagram-generator` | Mermaid architecture diagrams from codebase |
+| `aws-diagram-generator` | AWS architecture diagrams via MCP |
+| `github-actions-validator` | Validates/fixes GitHub Actions workflows |
+| `iac-validator` | Validates CloudFormation, CDK, Terraform |
+| `terraform-module-version-updater` | Updates Terraform module versions |
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `/create-pr` | Create PR with description and changelog |
+| `/setup-new-feature` | Plan → implementation setup |
+| `/onboard-new-developer` | Onboarding process for new developers |
+| `/run-all-tests-and-fix` | Full test suite and fix failures |
+| `/security-audit` | Security review and fixes |
+| `/code-review-checklist` | Code review checklist for quality |
+
+### Skills
+
+| Skill | Description |
+|-------|-------------|
+| `/aws-mcp-setup` | Configure AWS MCP servers (Full, IaC, Terraform, AgentCore, Context7) |
+| `/aws-cdk-development` | AWS CDK with TypeScript/Python; deploy and validate |
+| `/aws-iac-converter` | Convert IaC between CloudFormation, CDK, Terraform |
+| `/jira-ticket-technical-design-workflow` | JIRA ticket → TDD in docs/jira/\<KEY\>/; update JIRA |
+| `/jira-epic-generation` | Epics, stories, subtasks from requirements docs |
+| `/aws-agentcore-agent-workflow` | End-to-end AI agents on AWS Bedrock AgentCore |
+
+### MCP Configuration
+
+Project-level MCP is in `.mcp.json`. For full AWS, Bedrock AgentCore, and personal credentials, run `/aws-mcp-setup` to configure user-scoped servers.
 
 ## 🤝 Contributing
 

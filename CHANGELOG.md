@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file.
 
 ### ✨ New Features
 
+- **Claude Code support**: Added `.claude/` with equivalent configurations for use in Claude Code: 13 agents, 6 commands, 6 skills, and `settings.json`. `CLAUDE.md` at repo root provides always-on context (agents, commands, skills, MCP, Python/Terraform standards). Enables the same Cursor workflows in Claude Code.
+- **Project-level MCP config**: Added `.mcp.json` at repository root for team-shared MCP server configuration.
+
+### 🔧 Improvements
+
+- **README**: Updated to describe both Cursor (`.cursor/`) and Claude Code (`.claude/`), MCP setup, and added quick-reference tables for agents, commands, and skills. Repository structure now includes `.claude/`, `CLAUDE.md`, and `.mcp.json`.
+
 - **AWS Diagram Generator Agent**: Added `aws-diagram-generator` agent for AWS architecture diagrams using MCP servers. Supports Python diagrams package DSL and YAML-based Diagram-as-Code (e.g. `user-awsdac-mcp-server`). Generates PNG diagrams with proper AWS resource relationships, grouping, and best practices for complex architectures.
 - **Terraform Module Version Updater Agent**: Added `terraform-module-version-updater` agent that discovers Terraform files in the repo and updates module versions from a user-provided module→version map (file or inline). Targets `app.terraform.io/sseplc/<module>/aws` sources; changes only the `version` attribute and reports changes and unscanned modules.
 - **AWS IaC Converter Skill**: Added `aws-iac-converter` skill to convert AWS Infrastructure as Code between CloudFormation, CDK (TypeScript/Python), and Terraform. Seven-phase workflow: repo input → analysis & detection → target selection → conversion planning → implementation (via orchestrator) → verification → reporting. Uses AWS IaC MCP, Terraform MCP, and AWS Documentation MCP; includes analysis script, validation script, and conversion report template.
